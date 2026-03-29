@@ -1456,6 +1456,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["litellm", "tools"] },
+    { name = "crewai-tools" },
     { name = "selenium" },
     { name = "webdriver-manager" },
 ]
@@ -1463,6 +1464,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "crewai", extras = ["litellm", "tools"], specifier = "==1.12.2" },
+    { name = "crewai-tools", specifier = ">=1.12.2" },
     { name = "selenium", specifier = ">=4.41.0" },
     { name = "webdriver-manager", specifier = ">=4.0.2" },
 ]
