@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ✅ Keep only stable tools
 web_search_tool = SerperDevTool()
 web_scraping_tool = ScrapeWebsiteTool()
 
@@ -15,7 +14,6 @@ toolkit = [web_search_tool, web_scraping_tool]
 
 @CrewBase
 class MarketIntelligenceAi():
-    """Market Intelligence AI crew"""
 
     agents: list[BaseAgent]
     tasks: list[Task]
@@ -23,44 +21,55 @@ class MarketIntelligenceAi():
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
 
-    # ---------------- AGENTS ---------------- #
-
     @agent
     def market_research_specialist(self) -> Agent:
         return Agent(
             config=self.agents_config["market_research_specialist"],
-            tools=toolkit
+            tools=toolkit,
+            allow_delegation=False,
+            max_iter=2,
+            verbose=True
         )
 
     @agent
     def competitive_intelligence_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config["competitive_intelligence_analyst"],
-            tools=toolkit
+            tools=toolkit,
+            allow_delegation=False,
+            max_iter=2,
+            verbose=True
         )
 
     @agent
     def customer_insights_researcher(self) -> Agent:
         return Agent(
             config=self.agents_config["customer_insights_researcher"],
-            tools=toolkit
+            tools=toolkit,
+            allow_delegation=False,
+            max_iter=2,
+            verbose=True
         )
 
     @agent
     def product_strategy_advisor(self) -> Agent:
         return Agent(
             config=self.agents_config["product_strategy_advisor"],
-            tools=toolkit
+            tools=toolkit,
+            allow_delegation=False,
+            max_iter=2,
+            verbose=True
         )
 
     @agent
     def business_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config["business_analyst"],
-            tools=toolkit
+            tools=toolkit,
+            allow_delegation=False,
+            max_iter=2,
+            verbose=True
         )
-
-    # ---------------- TASKS ---------------- #
 
     @task
     def market_research_task(self) -> Task:
@@ -108,13 +117,11 @@ class MarketIntelligenceAi():
             ]
         )
 
-    # ---------------- CREW ---------------- #
-
     @crew
     def crew(self) -> Crew:
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
-            verbose=True   # 👈 add this for debugging
+            verbose=True
         )
